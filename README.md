@@ -25,25 +25,17 @@ Installation
 
 1.  Clone the chat-gpt-export repository:
 
-bashCopy code
-
 `git clone https://github.com/webwizarts/chatgpt-exporter.git`
 
 2.  Navigate to the extracted folder:
-
-bashCopy code
 
 `cd chatgpt-exporter`
 
 3.  Install the required dependencies:
 
-Copy code
-
 `npm install`
 
 4.  Build the extension:
-
-Copy code
 
 `npm run build`
 
