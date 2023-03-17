@@ -29,3 +29,13 @@ export const ModalFooter = styled.div`
   width: 100%;
   padding-top: 10px;
 `;
+
+export const ContextMenuContainer = styled.div`
+  background: #ffffff;
+  width: 100%;
+  min-width: 140px;
+  height: auto;
+  position: absolute;
+  top: 0px;
+  padding: 10px;
+`;

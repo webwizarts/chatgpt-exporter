@@ -18,3 +18,7 @@ export const DOWNLOAD_SVG = `<svg width="21" height="21" viewBox="0 0 24 24" fil
 // This is the container for modal
 // Note: this does not have an ID
 export const MODAL_CONTAINER = 'chatgpt-exporter-modal'
+
+// This is the container for context menu
+// Note: this does not have an ID
+export const MENU_CONTAINER = 'chatgpt-exporter-menu'

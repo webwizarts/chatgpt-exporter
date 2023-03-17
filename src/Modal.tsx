@@ -1,61 +1,51 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ModalContent, ModalFooter, ModalWrapper } from "./Content.styles";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import ReactToPrint from "react-to-print";
+import {
+  downloadMD,
+  downloadPDF,
+  downloadRTF,
+  downloadTXT,
+} from "./utils/helpers";
 
 interface ModalProps {
   content: string;
+  closeModal: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ content }) => {
-  const [isOpen, setIsOpen] = useState(true);
-
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
+const Modal: React.FC<ModalProps> = ({ content, closeModal }) => {
   const [value, setValue] = useState(content);
-  const componentRef = useRef<any>();
 
-  const handlePrintClick = () => {
-    if (componentRef.current) {
-      componentRef.current.handlePrint();
-    }
-  };
-  const handleDownload = () => {
-    // Send a message to the background script with the associated content
-    // chrome.runtime.sendMessage({
-    //   action: "export-content-pdf",
-    //   content: value,
-    // });
-  };
+  const handleDownloadPDF = useCallback(() => {
+    downloadPDF(value);
+  }, []);
+
+  const handleDownloadMD = useCallback(() => {
+    downloadMD(value);
+  }, []);
+
+  const handleDownloadRTF = useCallback(() => {
+    downloadRTF(value);
+  }, []);
+
+  const handleDownloadTXT = useCallback(() => {
+    downloadTXT(value);
+  }, []);
 
   return (
-    <>
-      {isOpen && (
-        <ModalWrapper onClick={closeModal}>
-          <ModalContent onClick={(e) => e.stopPropagation()}>
-            <ReactQuill theme="snow" value={value} onChange={setValue} />
-            <ReactToPrint
-              trigger={() => <button>Print</button>}
-              content={() => componentRef.current}
-            ></ReactToPrint>
-            <div
-              ref={componentRef}
-              dangerouslySetInnerHTML={{ __html: value }}
-            ></div>
-            <ModalFooter>
-              <button onClick={handleDownload}>Close</button>
-            </ModalFooter>
-          </ModalContent>
-        </ModalWrapper>
-      )}
-    </>
+    <ModalWrapper onClick={closeModal}>
+      <ModalContent onClick={(e) => e.stopPropagation()}>
+        <ReactQuill theme="snow" value={value} onChange={setValue} />
+        <ModalFooter>
+          <button onClick={handleDownloadPDF}>Download PDF</button>
+          <button onClick={handleDownloadMD}>Download MD</button>
+          <button onClick={handleDownloadRTF}>Download RTF</button>
+          <button onClick={handleDownloadTXT}>Download TXT</button>
+          <button onClick={closeModal}>Close</button>
+        </ModalFooter>
+      </ModalContent>
+    </ModalWrapper>
   );
 };
 

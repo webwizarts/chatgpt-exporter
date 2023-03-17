@@ -1,5 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOMClient from "react-dom/client";
+import ContextMenu from "./ContextMenu";
 import Modal from "./Modal";
 
 import {
@@ -9,9 +10,10 @@ import {
   DOWNLOAD_SVG,
   MAIN_CONTAINER,
   MODAL_CONTAINER,
+  MENU_CONTAINER,
 } from "./utils/constants";
 
-const loadModalContainer = () => {
+const addModalContainer = () => {
   const modalRoot = document.getElementById(MODAL_CONTAINER);
   const checkIfModalExists = Boolean(modalRoot);
 
@@ -22,66 +24,95 @@ const loadModalContainer = () => {
   }
 };
 
-const closeModal = () => {
-  const modalRoot = document.getElementById(MODAL_CONTAINER);
-  if (modalRoot) {
-    ReactDOM.unmountComponentAtNode(modalRoot);
+const handleExportClick = (event: MouseEvent) => {
+  const target = event?.target as HTMLElement;
+  const content = target
+    ?.closest(ANSWER_CONTAINER)
+    ?.querySelector(CONTENT_CONTAINER);
+
+  const modalContainer = document.getElementById(MODAL_CONTAINER);
+  if (content && modalContainer) {
+    const root = ReactDOMClient.createRoot(modalContainer);
+    root.render(
+      <Modal content={content.outerHTML} closeModal={() => root.unmount()} />
+    );
   }
 };
 
-const loadButtonToExport = () => {
-  const answers = document.querySelectorAll(ANSWER_CONTAINER);
+const handleExportContextMenuClick = (event: MouseEvent) => {
+  event.preventDefault();
+  const target = event?.target as HTMLElement;
 
-  // For each button, add an export button after the existing thumbs up/down buttons
-  answers.forEach((answer) => {
-    console.log(":bar");
-    const button_container = answer.querySelector(BUTTON_CONTAINER);
+  // Need to add some kind of recursion here, this is ugly af
+  const menuContainer = target.parentElement?.parentElement?.querySelector(
+    `#${MENU_CONTAINER}` ??
+      target.parentElement?.querySelector(`#${MENU_CONTAINER}`) ??
+      target.parentElement?.parentElement?.parentElement?.querySelector(
+        `#${MENU_CONTAINER}`
+      )
+  );
 
-    // Check if the export button already exists for this container
-    if (
-      button_container &&
-      !button_container.querySelector('button[data-export="true"]')
-    ) {
-      const exportButton = document.createElement("button");
-      exportButton.innerHTML = DOWNLOAD_SVG;
-      exportButton.dataset.export = "true";
+  const content = target
+    ?.closest(ANSWER_CONTAINER)
+    ?.querySelector(CONTENT_CONTAINER);
 
-      button_container.appendChild(exportButton);
+  console.log("menuContainer", target, menuContainer);
 
-      // Add a click event listener to the export button
-      exportButton.addEventListener("click", (event: MouseEvent) => {
-        const target = event?.target as HTMLElement;
-        const content = target
-          ?.closest(ANSWER_CONTAINER)
-          ?.querySelector(CONTENT_CONTAINER);
-
-        console.log("content", content);
-        if (content) {
-          ReactDOM.render(
-            <Modal content={content.outerHTML} />,
-            document.getElementById(MODAL_CONTAINER)
-          );
-        }
-      });
-    }
-  });
+  if (content && menuContainer) {
+    const root = ReactDOMClient.createRoot(menuContainer);
+    root.render(
+      <ContextMenu
+        content={content.outerHTML}
+        closeModal={() => root.unmount()}
+      />
+    );
+  }
 };
 
-loadButtonToExport();
-loadModalContainer();
+const loadModal = (answer: Element) => {
+  const button_container = answer.querySelector(BUTTON_CONTAINER);
+  // Check if the export button already exists for this container
+  if (
+    button_container &&
+    !button_container.querySelector('button[data-export="true"]') &&
+    !button_container.querySelector(`#${MENU_CONTAINER}`)
+  ) {
+    const exportButton = document.createElement("button");
+    exportButton.innerHTML = DOWNLOAD_SVG;
+    exportButton.dataset.export = "true";
+
+    button_container.appendChild(exportButton);
+
+    const menuDiv = document.createElement("div");
+    menuDiv.setAttribute("id", MENU_CONTAINER);
+    button_container.appendChild(menuDiv);
+
+    // Add a click event listener to the export button
+    exportButton.addEventListener("click", handleExportClick);
+    exportButton.addEventListener("contextmenu", handleExportContextMenuClick);
+  }
+};
+
+const addButtonToExport = () => {
+  const answers = document.querySelectorAll(ANSWER_CONTAINER);
+  // For each button, add an export button after the existing thumbs up/down buttons
+  answers.forEach(loadModal);
+};
+
+// Load the export buttons
+addButtonToExport();
+
+// Load the modal container
+addModalContainer();
+
+// Create a new instance of MutationObserver and specify a callback function
+const observer = new MutationObserver(() => {
+  // Call loadButtonToExport to add export buttons to newly added containers
+  addButtonToExport();
+});
 
 // Select the node that will be observed for changes
 const targetNode = document.querySelector(MAIN_CONTAINER);
-
-// Create a new instance of MutationObserver and specify a callback function
-const observer = new MutationObserver((mutationsList) => {
-  // Log a message when a mutation occurs
-  console.log("DOM changed:", mutationsList);
-  const answers = document.querySelectorAll(ANSWER_CONTAINER);
-  console.log("answers", answers);
-  // Call loadButtonToExport to add export buttons to newly added containers
-  loadButtonToExport();
-});
 
 // Configure the observer to watch for changes to the target node and its subtree
 const config = { attributes: true, childList: true, subtree: true };
