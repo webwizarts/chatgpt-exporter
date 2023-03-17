@@ -4,7 +4,7 @@
   "description": "",
   "main": "background.js",
   "scripts": {
-    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "lint": "eslint src/**/*.{ts,tsx}",
     "clean": "rm -rf dist",
     "build": "npm run clean && webpack",
     "watch": "npm run clean && npm run lint && webpack --watch"
