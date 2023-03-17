@@ -11,6 +11,7 @@ import {
   MAIN_CONTAINER,
   MODAL_CONTAINER,
   MENU_CONTAINER,
+  CHAT_CONTAINER,
 } from "./utils/constants";
 
 const addModalContainer = () => {
@@ -121,3 +122,19 @@ if (targetNode) {
   // Start observing the target node for changes
   observer.observe(targetNode, config);
 }
+
+const ping = () => {
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    // Select the chat container
+    const chatNode = document.querySelector(CHAT_CONTAINER);
+    if (request.message === "get_page_content") {
+      if (chrome.runtime.lastError) {
+        setTimeout(ping, 1000);
+      } else {
+        sendResponse({ content: chatNode?.innerHTML });
+      }
+    }
+  });
+};
+
+ping();

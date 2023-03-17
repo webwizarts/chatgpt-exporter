@@ -1,8 +1,11 @@
 {
   "manifest_version": 3,
   "name": "ChatGPT Exporter",
-  "description": "Base Level Extension",
+  "description": "allows you to export chat content in various formats such as PDF, Markdown, RTF, and plain text",
   "version": "1.0.0",
+  "action": {
+    "default_popup": "dist/popup.html"
+  },
   "content_scripts": [
     {
       "matches": ["https://chat.openai.com/chat*"],

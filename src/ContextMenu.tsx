@@ -5,6 +5,7 @@ import {
   downloadPDF,
   downloadRTF,
   downloadTXT,
+  copyToClipboard,
 } from "./utils/helpers";
 
 interface ContextMenuProps {
@@ -48,8 +49,13 @@ const ContextMenu: React.FC<ContextMenuProps> = ({ closeModal, content }) => {
     downloadTXT(content);
   }, []);
 
+  const handleCopy = useCallback(async () => {
+    await copyToClipboard(content);
+  }, []);
+
   return (
     <ContextMenuContainer ref={contextMenuRef}>
+      <button onClick={handleCopy}>Copy To Clipboard</button>
       <button onClick={handleDownloadPDF}>Download PDF</button>
       <button onClick={handleDownloadMD}>Download MD</button>
       <button onClick={handleDownloadRTF}>Download RTF</button>

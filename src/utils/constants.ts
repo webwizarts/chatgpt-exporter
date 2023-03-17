@@ -1,6 +1,9 @@
 // This is the classname group for selecting the main container, we listen for changes here
 export const MAIN_CONTAINER = "#__next"
 
+// This is the classname group for selecting the main container, we listen for changes here
+export const CHAT_CONTAINER = "main .flex.flex-col.items-center.text-sm"
+
 // This is the classname group for selecting the answer container
 export const ANSWER_CONTAINER =
     ".group.w-full.text-gray-800.dark\\:text-gray-100.border-b.border-black\\/10.dark\\:border-gray-900\\/50.bg-gray-50.dark\\:bg-\\[\\#444654\\]";

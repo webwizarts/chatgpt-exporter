@@ -42,3 +42,19 @@ export const downloadTXT = (content: string) => {
   const text = htmlToText(content, { wordwrap: 130 });
   generateDownload("prompt.txt", text, "text/plain");
 };
+
+export const isValidUrl = (url: string) => {
+  // Use RegExp to match the specific URL pattern
+  const urlPattern = /^https:\/\/chat\.openai\.com\/chat.*/;
+  return urlPattern.test(url);
+}
+
+export const copyToClipboard = async (content: string) => {
+  try {
+    const text = htmlToText(content, { wordwrap: 130 });
+    await navigator.clipboard.writeText(text);
+    console.log('Text copied to clipboard');
+  } catch (err) {
+    console.error('Failed to copy text: ', err);
+  }
+};

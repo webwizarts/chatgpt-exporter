@@ -1,8 +1,11 @@
 const path = require("path");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
     content: "./src/Content.tsx",
+    popup: "./src/Popup.tsx",
   },
   output: {
     filename: "[name].js",
@@ -37,4 +40,21 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js"],
   },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: "public",
+          to: ".",
+          filter: (resourcePath) => !resourcePath.endsWith("/popup.html"),
+        },
+      ],
+    }),
+    new HtmlWebpackPlugin({
+      template: "public/popup.html",
+      filename: "popup.html",
+      chunks: ["popup"],
+      inject: "body",
+    }),
+  ],
 };
