@@ -48,6 +48,10 @@ module.exports = {
           to: ".",
           filter: (resourcePath) => !resourcePath.endsWith("/popup.html"),
         },
+        {
+          from: "manifest.json",
+          to: ".",
+        },
       ],
     }),
     new HtmlWebpackPlugin({
@@ -56,5 +60,14 @@ module.exports = {
       chunks: ["popup"],
       inject: "body",
     }),
+    function () {
+      this.hooks.done.tap("UpdateManifest", () => {
+        const fs = require("fs");
+        const manifestPath = path.join(__dirname, "dist", "manifest.json");
+        let manifestContent = fs.readFileSync(manifestPath, "utf8");
+        manifestContent = manifestContent.replaceAll("dist/", "/");
+        fs.writeFileSync(manifestPath, manifestContent);
+      });
+    },
   ],
 };
