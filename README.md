@@ -1,6 +1,8 @@
 chat-gpt-export
 ===============
 
+(Still in Development, features work, but they are ugly)
+
 This is a Chrome extension that allows you to export chat content in various formats such as PDF, Markdown, RTF, and plain text. The project is built using React, TypeScript, and styled-components, and leverages webpack for bundling.
 
 Features
