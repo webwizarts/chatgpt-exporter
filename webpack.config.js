@@ -35,6 +35,18 @@ module.exports = {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 10192, // kb
+              name: "[name].[ext]?[hash]",
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {
@@ -60,14 +72,5 @@ module.exports = {
       chunks: ["popup"],
       inject: "body",
     }),
-    function () {
-      this.hooks.done.tap("UpdateManifest", () => {
-        const fs = require("fs");
-        const manifestPath = path.join(__dirname, "dist", "manifest.json");
-        let manifestContent = fs.readFileSync(manifestPath, "utf8");
-        manifestContent = manifestContent.replaceAll("dist/", "/");
-        fs.writeFileSync(manifestPath, manifestContent);
-      });
-    },
   ],
 };
