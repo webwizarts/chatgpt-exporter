@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import ReactDOM from "react-dom";
+import { MenuButton, PopupContainer, PopupTitle } from "./Content.styles";
 
 import {
   copyToClipboard,
@@ -9,6 +10,13 @@ import {
   downloadTXT,
   isValidUrl,
 } from "./utils/helpers";
+
+import pdfImg from "./icons/pdf.png"
+import txtImg from "./icons/txt.png"
+import mdImg from "./icons/md.png"
+import rtfImg from "./icons/rtf.png"
+import copyImg from "./icons/copy.png"
+
 
 const Popout = () => {
   const downloadPageContent = useCallback(
@@ -70,13 +78,14 @@ const Popout = () => {
   }, []);
 
   return (
-    <div>
-      <button onClick={handleCopy}>Copy To Clipboard</button>
-      <button onClick={handleDownloadPDF}>Download PDF</button>
-      <button onClick={handleDownloadMD}>Download MD</button>
-      <button onClick={handleDownloadRTF}>Download RTF</button>
-      <button onClick={handleDownloadTXT}>Download TXT</button>
-    </div>
+    <PopupContainer>
+      <PopupTitle>Download Full Conversation</PopupTitle> 
+      <MenuButton onClick={handleCopy}><img src={copyImg} width={20} alt="copy" />Copy To Clipboard</MenuButton>
+      <MenuButton onClick={handleDownloadTXT}><img src={txtImg} alt="txt" width={20} />Download TXT</MenuButton>
+      <MenuButton onClick={handleDownloadPDF}><img src={pdfImg} alt="pdf" width={20} />Download PDF</MenuButton>
+      <MenuButton onClick={handleDownloadRTF}><img src={rtfImg} alt="rtf" width={20} />Download RTF</MenuButton>
+      <MenuButton onClick={handleDownloadMD}><img src={mdImg} alt="md" width={20}  />Download MD</MenuButton>
+    </PopupContainer>
   );
 };
 
