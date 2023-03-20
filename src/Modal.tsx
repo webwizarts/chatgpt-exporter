@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { CloseButton, EditorContainer, EditorHeader, EditorHeaderButton, MenuButton, ModalContent, ModalHeader, ModalTitle, ModalWrapper } from "./Content.styles";
+import { CloseButton, EditorContainer, EditorHeader, EditorHeaderButton, ModalContent, ModalHeader, ModalTitle, ModalWrapper } from "./Content.styles";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import {
