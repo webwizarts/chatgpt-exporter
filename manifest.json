@@ -4,20 +4,14 @@
   "description": "allows you to export chat content in various formats such as PDF, Markdown, RTF, and plain text",
   "version": "1.0.0",
   "action": {
-    "default_popup": "dist/popup.html"
+    "default_popup": "/popup.html"
   },
   "content_scripts": [
     {
       "matches": ["https://chat.openai.com/chat*"],
-      "js": ["dist/content.js"]
+      "js": ["/content.js"]
     }
   ],
-  "host_permissions": [
-    "*://chat.openai.com/*"
-  ],
-  "permissions": [
-    "downloads", 
-    "tabs", 
-    "scripting"
-  ]
+  "host_permissions": ["*://chat.openai.com/*"],
+  "permissions": ["downloads", "tabs", "scripting"]
 }
