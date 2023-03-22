@@ -7,12 +7,13 @@ import {
   ANSWER_CONTAINER,
   BUTTON_CONTAINER,
   CONTENT_CONTAINER,
-  DOWNLOAD_SVG,
   MAIN_CONTAINER,
   MODAL_CONTAINER,
   MENU_CONTAINER,
   CHAT_CONTAINER,
 } from "./utils/constants";
+
+import downloadImage from "./icons/download.png";
 
 const addModalContainer = () => {
   const modalRoot = document.getElementById(MODAL_CONTAINER);
@@ -78,9 +79,13 @@ const loadModal = (answer: Element) => {
     !button_container.querySelector('button[data-export="true"]') &&
     !button_container.querySelector(`#${MENU_CONTAINER}`)
   ) {
+    const imageElement = document.createElement('img');
+    imageElement.src = downloadImage;
+    imageElement.style.width = '20px';
+
     const exportButton = document.createElement("button");
-    exportButton.innerHTML = DOWNLOAD_SVG;
     exportButton.dataset.export = "true";
+    exportButton.appendChild(imageElement);
 
     button_container.appendChild(exportButton);
 
