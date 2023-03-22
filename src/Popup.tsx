@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import ReactDOM from "react-dom";
-import { MenuButton, PopupContainer, PopupTitle } from "./Content.styles";
+import { MenuButton, PopupContainer, PopupFooter, PopupTitle } from "./Content.styles";
 
 import {
   copyToClipboard,
@@ -11,11 +11,11 @@ import {
   isValidUrl,
 } from "./utils/helpers";
 
-import pdfImg from "./icons/pdf.png"
-import txtImg from "./icons/txt.png"
-import mdImg from "./icons/md.png"
-import rtfImg from "./icons/rtf.png"
-import copyImg from "./icons/copy.png"
+import pdfImg from "./icons/pdf-white.png"
+import txtImg from "./icons/txt-white.png"
+import mdImg from "./icons/md-white.png"
+import rtfImg from "./icons/rtf-white.png"
+import copyImg from "./icons/copy-white.png"
 
 
 const Popout = () => {
@@ -78,14 +78,32 @@ const Popout = () => {
   }, []);
 
   return (
-    <PopupContainer>
+    <>
       <PopupTitle>Download Full Conversation</PopupTitle> 
-      <MenuButton onClick={handleCopy}><img src={copyImg} width={20} alt="copy" />Copy To Clipboard</MenuButton>
-      <MenuButton onClick={handleDownloadTXT}><img src={txtImg} alt="txt" width={20} />Download TXT</MenuButton>
-      <MenuButton onClick={handleDownloadPDF}><img src={pdfImg} alt="pdf" width={20} />Download PDF</MenuButton>
-      <MenuButton onClick={handleDownloadRTF}><img src={rtfImg} alt="rtf" width={20} />Download RTF</MenuButton>
-      <MenuButton onClick={handleDownloadMD}><img src={mdImg} alt="md" width={20}  />Download MD</MenuButton>
-    </PopupContainer>
+      <PopupContainer>
+        <MenuButton onClick={handleCopy}>
+            <img src={copyImg} width={20} alt="copy" />
+          Copy To Clipboard
+        </MenuButton>
+        <MenuButton onClick={handleDownloadTXT}>
+            <img src={txtImg} alt="txt" width={20} />
+          Download as TXT
+        </MenuButton>
+        <MenuButton onClick={handleDownloadPDF}>
+            <img src={pdfImg} alt="pdf" width={20} />
+          Download as PDF
+        </MenuButton>
+        <MenuButton onClick={handleDownloadRTF}>
+            <img src={rtfImg} alt="rtf" width={20} />
+          Download as RTF
+        </MenuButton>
+        <MenuButton onClick={handleDownloadMD}>
+            <img src={mdImg} alt="md" width={20}  />
+          Download as MD
+        </MenuButton>
+      </PopupContainer>
+      <PopupFooter>ChatGPT Exporter</PopupFooter>
+    </>
   );
 };
 

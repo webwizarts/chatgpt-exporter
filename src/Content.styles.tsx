@@ -157,24 +157,52 @@ export const EditorHeaderButton = styled.button<ThemedStyledProps<EditorHeaderBu
 `
 
 export const PopupTitle = styled.p`
-  color: rgb(93 93 93);
-  font-size: 12px;
-  font-weight: bold;
-  white-space: nowrap;
-  letter-spacing: 0.2px;
-  color: rgb(50, 50, 50);
+  font-size: 14px;
+  font-family: Roboto, sans-serif;
+  line-height: 1.5;
   text-align: center;
-  padding: 5px;
+  display: block;
+  font-weight: 500;
+  color: #E8F4FA;
+  padding-top: 8px;
+  padding-bottom: 18px;
 `
 
 export const PopupContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 5px;
+  margin: 15px;
+  margin-top: 0;
+  padding: 10px;
+  padding-top: 2px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.25);
 
   & > button {
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: Roboto, sans-serif;
+    color: #fff;
+    line-height: 1.5;
+    border: none;
+    padding-block: 10px;
   }
+
+  & > button:hover {
+    background-color: transparent !important; 
+  }
+
+`
+
+export const PopupFooter = styled.p`
+  font-size: 11px;
+  color: #f5f5f5;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  font-family: Roboto, sans-serif;
 `
 
 export const ContextMenuContainer = styled.div`
