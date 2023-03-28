@@ -8,6 +8,8 @@ declare module 'html2pdf.js' {
         };
         html2canvas?: any;
         jsPDF?: any;
+        pageBreak?: any;
+        enableLinks?: boolean;
     }): Promise<void> | html2pdf.Worker;
 
     export class Worker {
