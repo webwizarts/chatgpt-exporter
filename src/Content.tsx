@@ -14,6 +14,7 @@ import {
 } from "./utils/constants";
 
 import downloadImage from "./icons/download.png";
+import { downloadPDF } from "./utils/helpers";
 
 const addModalContainer = () => {
   const modalRoot = document.getElementById(MODAL_CONTAINER);
@@ -32,7 +33,12 @@ const handleExportClick = (event: MouseEvent) => {
     ?.closest(ANSWER_CONTAINER)
     ?.querySelector(CONTENT_CONTAINER);
 
+  // const contentContainerElement = content?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement;
   const modalContainer = document.getElementById(MODAL_CONTAINER);
+
+  // Ignore this element on pdf download
+  modalContainer?.setAttribute('data-html2canvas-ignore', 'true');
+
   if (content && modalContainer) {
     const root = ReactDOMClient.createRoot(modalContainer);
     root.render(
@@ -54,17 +60,24 @@ const handleExportContextMenuClick = (event: MouseEvent) => {
       )
   );
 
+  // Ignore this element on pdf download
+  menuContainer?.setAttribute('data-html2canvas-ignore', 'true');
+
   const content = target
     ?.closest(ANSWER_CONTAINER)
     ?.querySelector(CONTENT_CONTAINER);
 
-  console.log("menuContainer", target, menuContainer);
+  // console.log("menuContainer", target, menuContainer);
+
+  // Answer group container
+  const contentElement = content?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
 
   if (content && menuContainer) {
     const root = ReactDOMClient.createRoot(menuContainer);
     root.render(
       <ContextMenu
         content={content.outerHTML}
+        element={contentElement}
         closeModal={() => root.unmount()}
       />
     );
@@ -138,7 +151,14 @@ const ping = () => {
       } else {
         sendResponse({ content: chatNode?.innerHTML });
       }
+    }else if (request.message === "download_full_page") {
+      if (chrome.runtime.lastError) {
+        setTimeout(ping, 1000);
+      } else {
+        downloadPDF(document.querySelector('main'));
+      }
     }
+
   });
 };
 
