@@ -5,7 +5,6 @@ import { MenuButton, PopupContainer, PopupFooter, PopupTitle } from "./Content.s
 import {
   copyToClipboard,
   downloadMD,
-  downloadPDF,
   downloadRTF,
   downloadTXT,
   isValidUrl,
@@ -25,11 +24,18 @@ const Popout = () => {
         const activeTab = tabs[0];
 
         if (activeTab.id) {
-          chrome.tabs.sendMessage(
+          if(type === "PDF") {
+            chrome.tabs.sendMessage(
+              activeTab.id,
+              {message: 'download_full_page'}  
+            )
+          }else {
+  
+            chrome.tabs.sendMessage(
             activeTab.id,
             { message: "get_page_content" },
             (response) => {
-              console.log("response received", response);
+              // console.log("response received", response);
               if (response && response.content) {
                 switch (type) {
                   case "COPY":
@@ -38,19 +44,18 @@ const Popout = () => {
                   case "MD":
                     downloadMD(response.content);
                     break;
-                  case "PDF":
-                    downloadPDF(response.content);
-                    break;
                   case "TXT":
                     downloadTXT(response.content);
                     break;
-                  case "RTF":
-                    downloadRTF(response.content);
-                    break;
+                    case "RTF":
+                      downloadRTF(response.content);
+                      break;
+                    }
+                  }
                 }
-              }
-            }
-          );
+                );
+                
+          }
         }
       });
     },
