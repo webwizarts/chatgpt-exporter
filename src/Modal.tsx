@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { CloseButton, EditorContainer, EditorHeader, EditorHeaderButton, ModalContent, ModalHeader, ModalTitle, ModalWrapper } from "./Content.styles";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -23,25 +23,30 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ content, closeModal }) => {
   const [value, setValue] = useState(content);
+  const editorRef = useRef<any>(null);
 
   const handleDownloadPDF = useCallback(() => {
-    downloadPDF(value);
-  }, []);
+    downloadPDF(editorRef.current?.editingArea);
+  }, [value]);
 
   const handleDownloadMD = useCallback(() => {
     downloadMD(value);
-  }, []);
+  }, [value]);
 
   const handleDownloadRTF = useCallback(() => {
     downloadRTF(value);
-  }, []);
+  }, [value]);  
 
   const handleDownloadTXT = useCallback(() => {
     downloadTXT(value);
-  }, []);
+  }, [value]);
 
   const handleCopy = useCallback(async () => {
     await copyToClipboard(value);
+  }, [value]);
+
+  useEffect(() => {
+    editorRef.current.editingArea.style.color = "black";
   }, []);
 
   return (
@@ -59,7 +64,7 @@ const Modal: React.FC<ModalProps> = ({ content, closeModal }) => {
             <EditorHeaderButton onClick={handleDownloadRTF} tooltip="Download as Rich Text Format" tooltipOnClick="Downloaded"><img src={rtfImg} alt="rtf" width={20} /></EditorHeaderButton>
             <EditorHeaderButton onClick={handleDownloadMD} tooltip="Download as Markdown" tooltipOnClick="Downloaded"><img src={mdImg} alt="md" width={20} /></EditorHeaderButton>
           </EditorHeader>
-          <ReactQuill theme="snow" value={value} onChange={setValue} />
+          <ReactQuill ref={editorRef} theme="snow" value={value} onChange={setValue} />
         </EditorContainer>
       </ModalContent>
     </ModalWrapper>
