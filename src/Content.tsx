@@ -14,7 +14,7 @@ import {
 } from "./utils/constants";
 
 import downloadImage from "./icons/download.png";
-import { downloadPDF } from "./utils/helpers";
+import { downloadPDF, findNearestElementById } from "./utils/helpers";
 
 const addModalContainer = () => {
   const modalRoot = document.getElementById(MODAL_CONTAINER);
@@ -52,13 +52,7 @@ const handleExportContextMenuClick = (event: MouseEvent) => {
   const target = event?.target as HTMLElement;
 
   // Need to add some kind of recursion here, this is ugly af
-  const menuContainer = target.parentElement?.parentElement?.querySelector(
-    `#${MENU_CONTAINER}` ??
-      target.parentElement?.querySelector(`#${MENU_CONTAINER}`) ??
-      target.parentElement?.parentElement?.parentElement?.querySelector(
-        `#${MENU_CONTAINER}`
-      )
-  );
+  const menuContainer = findNearestElementById(target, MENU_CONTAINER);
 
   // Ignore this element on pdf download
   menuContainer?.setAttribute('data-html2canvas-ignore', 'true');

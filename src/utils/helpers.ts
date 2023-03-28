@@ -66,3 +66,18 @@ export const copyToClipboard = async (content: string) => {
     console.error('Failed to copy text: ', err);
   }
 };
+
+export const findNearestElementById = (element: Element | null | undefined, targetId: string): Element | null => {
+  if (!element) {
+    return null;
+  }
+
+  // Search for siblings with the target ID
+  const sibling = element?.parentElement?.querySelector(`#${targetId}`);
+  if (sibling) {
+    return sibling;
+  }
+
+  // Continue searching up the DOM tree
+  return findNearestElementById(element.parentElement, targetId);
+}
