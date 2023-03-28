@@ -10,7 +10,7 @@ const titleColor = '#393939';
 
 export const MenuButton = styled.button`
   background-color: transparent;
-  color: black;
+  color: #000000;
   line-height: 30px;
   padding-inline: 10px;
   padding-right: 25px;
@@ -34,7 +34,7 @@ export const CloseButton = styled.button`
   width: 20px;
   height: 20px;
   background-color: rgb(225 74 74);
-  color: white;
+  color: #FFFFFF;
   font-size: 10px;
   font-weight: bold;
   border-radius: 100%;
@@ -77,7 +77,7 @@ export const ModalTitle = styled.h2`
 
 export const EditorContainer = styled.div`
   color: black;
-  background-color: white;
+  background-color: #FFFFFF;
   border-radius: 15px;
   border: ${border};
 
@@ -88,12 +88,12 @@ export const EditorContainer = styled.div`
   
   & .ql-container.ql-snow {
     border: none;
-    color: black !important;
+    color: #000000 !important;
   }
   
   & .ql-editor {
     height: 545px;
-    color: black !important;
+    color: #000000 !important;
   }
   
 
@@ -112,7 +112,7 @@ export const EditorHeader = styled.header`
 `
 
 export const EditorHeaderButton = styled.button<ThemedStyledProps<EditorHeaderButtonProps, any>>`
-  background-color: white;
+  background-color: #FFFFFF;
   border-radius: 100%;
   border: ${border};
   padding: 5px;
@@ -124,7 +124,7 @@ export const EditorHeaderButton = styled.button<ThemedStyledProps<EditorHeaderBu
     content: "${props => props.tooltip}";
     white-space: nowrap;
     position: absolute;
-    background: white;
+    background: #FFFFFF;
     padding: 5px;
     border-radius: 3px;
     bottom: 130%;
@@ -140,7 +140,7 @@ export const EditorHeaderButton = styled.button<ThemedStyledProps<EditorHeaderBu
     height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-bottom: 10px solid white;
+    border-bottom: 10px solid #FFFFFF;
     transform: rotate(180deg);
     display: none;
   }
@@ -230,7 +230,7 @@ export const ContextMenuContainer = styled.div`
     height: 0;
     border-left: 12px solid transparent;
     border-right: 12px solid transparent;
-    border-bottom: 10px solid white;
+    border-bottom: 10px solid #FFFFFF;
   }
 
 `;
