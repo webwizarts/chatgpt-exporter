@@ -85,15 +85,18 @@ export const EditorContainer = styled.div`
     border: none;
     border-bottom: ${border};
   }
-
+  
   & .ql-container.ql-snow {
     border: none;
-  }
-
-  & .ql-editor {
-    height: 545px;
+    color: black !important;
   }
   
+  & .ql-editor {
+    height: 545px;
+    color: black !important;
+  }
+  
+
 `
 
 export const EditorHeader = styled.header`
