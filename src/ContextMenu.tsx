@@ -16,10 +16,11 @@ import copyImg from "./icons/copy.png"
 
 interface ContextMenuProps {
   content: string;
+  element: any;
   closeModal: () => void;
 }
 
-const ContextMenu: React.FC<ContextMenuProps> = ({ closeModal, content }) => {
+const ContextMenu: React.FC<ContextMenuProps> = ({ closeModal, content, element }) => {
   const contextMenuRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const handleClickOutside = useCallback((event: MouseEvent) => {
@@ -40,7 +41,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({ closeModal, content }) => {
   }, [contextMenuRef]);
 
   const handleDownloadPDF = useCallback(() => {
-    downloadPDF(content);
+    downloadPDF(element);
   }, []);
 
   const handleDownloadMD = useCallback(() => {
