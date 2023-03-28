@@ -37,7 +37,7 @@ const handleExportClick = (event: MouseEvent) => {
   const modalContainer = document.getElementById(MODAL_CONTAINER);
 
   // Ignore this element on pdf download
-  modalContainer?.setAttribute('data-html2canvas-ignore', 'true');
+  modalContainer?.setAttribute("data-html2canvas-ignore", "true");
 
   if (content && modalContainer) {
     const root = ReactDOMClient.createRoot(modalContainer);
@@ -55,7 +55,7 @@ const handleExportContextMenuClick = (event: MouseEvent) => {
   const menuContainer = findNearestElementById(target, MENU_CONTAINER);
 
   // Ignore this element on pdf download
-  menuContainer?.setAttribute('data-html2canvas-ignore', 'true');
+  menuContainer?.setAttribute("data-html2canvas-ignore", "true");
 
   const content = target
     ?.closest(ANSWER_CONTAINER)
@@ -64,7 +64,9 @@ const handleExportContextMenuClick = (event: MouseEvent) => {
   // console.log("menuContainer", target, menuContainer);
 
   // Answer group container
-  const contentElement = content?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
+  const contentElement =
+    content?.parentElement?.parentElement?.parentElement?.parentElement
+      ?.parentElement;
 
   if (content && menuContainer) {
     const root = ReactDOMClient.createRoot(menuContainer);
@@ -86,9 +88,9 @@ const loadModal = (answer: Element) => {
     !button_container.querySelector('button[data-export="true"]') &&
     !button_container.querySelector(`#${MENU_CONTAINER}`)
   ) {
-    const imageElement = document.createElement('img');
+    const imageElement = document.createElement("img");
     imageElement.src = downloadImage;
-    imageElement.style.width = '20px';
+    imageElement.style.width = "20px";
 
     const exportButton = document.createElement("button");
     exportButton.dataset.export = "true";
@@ -145,14 +147,13 @@ const ping = () => {
       } else {
         sendResponse({ content: chatNode?.innerHTML });
       }
-    }else if (request.message === "download_full_page") {
+    } else if (request.message === "download_full_page") {
       if (chrome.runtime.lastError) {
         setTimeout(ping, 1000);
       } else {
-        downloadPDF(document.querySelector('main'));
+        downloadPDF(document.querySelector("main"));
       }
     }
-
   });
 };
 
