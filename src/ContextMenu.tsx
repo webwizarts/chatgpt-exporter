@@ -8,18 +8,23 @@ import {
   copyToClipboard,
 } from "./utils/helpers";
 
-import pdfImg from "./icons/pdf.png"
-import txtImg from "./icons/txt.png"
-import mdImg from "./icons/md.png"
-import rtfImg from "./icons/rtf.png"
-import copyImg from "./icons/copy.png"
+import pdfImg from "./icons/pdf.png";
+import txtImg from "./icons/txt.png";
+import mdImg from "./icons/md.png";
+import rtfImg from "./icons/rtf.png";
+import copyImg from "./icons/copy.png";
 
 interface ContextMenuProps {
   content: string;
+  element: any;
   closeModal: () => void;
 }
 
-const ContextMenu: React.FC<ContextMenuProps> = ({ closeModal, content }) => {
+const ContextMenu: React.FC<ContextMenuProps> = ({
+  closeModal,
+  content,
+  element,
+}) => {
   const contextMenuRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const handleClickOutside = useCallback((event: MouseEvent) => {
@@ -40,7 +45,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({ closeModal, content }) => {
   }, [contextMenuRef]);
 
   const handleDownloadPDF = useCallback(() => {
-    downloadPDF(content);
+    downloadPDF(element);
   }, []);
 
   const handleDownloadMD = useCallback(() => {
@@ -61,11 +66,26 @@ const ContextMenu: React.FC<ContextMenuProps> = ({ closeModal, content }) => {
 
   return (
     <ContextMenuContainer ref={contextMenuRef}>
-      <MenuButton onClick={handleCopy}><img src={copyImg} width={20} alt="copy" />Copy To Clipboard</MenuButton>
-      <MenuButton onClick={handleDownloadTXT}><img src={txtImg} alt="txt" width={20} />Download TXT</MenuButton>
-      <MenuButton onClick={handleDownloadPDF}><img src={pdfImg} alt="pdf" width={20} />Download PDF</MenuButton>
-      <MenuButton onClick={handleDownloadRTF}><img src={rtfImg} alt="rtf" width={20} />Download RTF</MenuButton>
-      <MenuButton onClick={handleDownloadMD} style={{borderBottom: 'none'}}><img src={mdImg} alt="md" width={20}  />Download MD</MenuButton>
+      <MenuButton onClick={handleCopy}>
+        <img src={copyImg} width={20} alt="copy" />
+        Copy To Clipboard
+      </MenuButton>
+      <MenuButton onClick={handleDownloadTXT}>
+        <img src={txtImg} alt="txt" width={20} />
+        Download TXT
+      </MenuButton>
+      <MenuButton onClick={handleDownloadPDF}>
+        <img src={pdfImg} alt="pdf" width={20} />
+        Download PDF
+      </MenuButton>
+      <MenuButton onClick={handleDownloadRTF}>
+        <img src={rtfImg} alt="rtf" width={20} />
+        Download RTF
+      </MenuButton>
+      <MenuButton onClick={handleDownloadMD} style={{ borderBottom: "none" }}>
+        <img src={mdImg} alt="md" width={20} />
+        Download MD
+      </MenuButton>
     </ContextMenuContainer>
   );
 };

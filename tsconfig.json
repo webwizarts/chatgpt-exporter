@@ -1,22 +1,23 @@
 {
-    "compilerOptions": {
-      "target": "es5",
-      "lib": ["dom", "dom.iterable", "esnext"],
-      "allowJs": false,
-      "skipLibCheck": true,
-      "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
-      "strict": true,
-      "forceConsistentCasingInFileNames": true,
-      "noFallthroughCasesInSwitch": true,
-      "module": "esnext",
-      "moduleResolution": "node",
-      "resolveJsonModule": true,
-      "noEmit": false,
-      "jsx": "react",
-      "outDir": "./dist"
-    },
-    "files": ["./src/types/html2pdf.d.ts", "src/types/html-to-rtf-browser.d.ts"],
-    "include": ["src"],
-    "exclude": ["build", "node_modules"]
+  "compilerOptions": {
+    "target": "es5",
+    "downlevelIteration": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noEmit": false,
+    "jsx": "react",
+    "outDir": "./dist"
+  },
+  "files": ["./src/types/html2pdf.d.ts", "src/types/html-to-rtf-browser.d.ts"],
+  "include": ["src"],
+  "exclude": ["build", "node_modules"]
 }

@@ -17,44 +17,82 @@ export const generateDownload = (
   URL.revokeObjectURL(url);
 };
 
-// TODO: Make filename timestamp.filetype
-export const downloadPDF = (content: string) => {
+const filename = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const hour = String(now.getHours()).padStart(2, "0");
+  const minute = String(now.getMinutes()).padStart(2, "0");
+  const second = String(now.getSeconds()).padStart(2, "0");
+
+  const timestamp = `${year}${month}${day}${hour}${minute}${second}`;
+  return timestamp;
+};
+
+export const downloadPDF = (content: any) => {
+  const name = filename();
   html2pdf(content, {
     margin: 0,
-    filename: "prompt.pdf",
+    filename: `${name}.pdf`,
     jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    pageBreak: {
+      mode: ["legacy", "avoid-all", "css"],
+    },
+    enableLinks: true,
   });
 };
 
 export const downloadMD = (content: string) => {
+  const name = filename();
   const turndownService = new TurndownService();
   const markdown = turndownService.turndown(content);
-  generateDownload("prompt.md", markdown, "text/markdown");
+  generateDownload(`${name}.md`, markdown, "text/markdown");
 };
 
 export const downloadRTF = (content: string) => {
+  const name = filename();
   const htmlToRtf = new HtmlToRtfBrowser();
   const rtf = htmlToRtf.convertHtmlToRtf(content);
-  generateDownload("prompt.rtf", rtf, "application/rtf;charset=utf-8");
+  generateDownload(`${name}.rtf`, rtf, "application/rtf;charset=utf-8");
 };
 
 export const downloadTXT = (content: string) => {
+  const name = filename();
   const text = htmlToText(content, { wordwrap: 130 });
-  generateDownload("prompt.txt", text, "text/plain");
+  generateDownload(`${name}.txt`, text, "text/plain");
 };
 
 export const isValidUrl = (url: string) => {
   // Use RegExp to match the specific URL pattern
   const urlPattern = /^https:\/\/chat\.openai\.com\/chat.*/;
   return urlPattern.test(url);
-}
+};
 
 export const copyToClipboard = async (content: string) => {
   try {
     const text = htmlToText(content, { wordwrap: 130 });
     await navigator.clipboard.writeText(text);
-    console.log('Text copied to clipboard');
+    console.log("Text copied to clipboard");
   } catch (err) {
-    console.error('Failed to copy text: ', err);
+    console.error("Failed to copy text: ", err);
   }
+};
+
+export const findNearestElementById = (
+  element: Element | null | undefined,
+  targetId: string
+): Element | null => {
+  if (!element) {
+    return null;
+  }
+
+  // Search for siblings with the target ID
+  const sibling = element?.parentElement?.querySelector(`#${targetId}`);
+  if (sibling) {
+    return sibling;
+  }
+
+  // Continue searching up the DOM tree
+  return findNearestElementById(element.parentElement, targetId);
 };

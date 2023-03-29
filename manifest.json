@@ -3,6 +3,9 @@
   "name": "ChatGPT Exporter",
   "description": "allows you to export chat content in various formats such as PDF, Markdown, RTF, and plain text",
   "version": "1.0.0",
+  "icons": {
+    "128": "/icon.png"
+  },
   "action": {
     "default_popup": "/popup.html"
   },

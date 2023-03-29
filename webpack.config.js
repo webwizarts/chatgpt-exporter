@@ -64,6 +64,10 @@ module.exports = {
           from: "manifest.json",
           to: ".",
         },
+        {
+          from: "icon.png",
+          to: ".",
+        },
       ],
     }),
     new HtmlWebpackPlugin({

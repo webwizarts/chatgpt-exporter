@@ -1,16 +1,16 @@
-import styled, { ThemedStyledProps }  from "styled-components";
+import styled, { ThemedStyledProps } from "styled-components";
 
 interface EditorHeaderButtonProps {
   tooltip?: string;
   tooltipOnClick?: string;
 }
 
-const border = '3px solid rgb(181, 200, 214)';
-const titleColor = '#393939';
+const border = "3px solid rgb(181, 200, 214)";
+const titleColor = "#393939";
 
 export const MenuButton = styled.button`
   background-color: transparent;
-  color: black;
+  color: #000000;
   line-height: 30px;
   padding-inline: 10px;
   padding-right: 25px;
@@ -27,18 +27,17 @@ export const MenuButton = styled.button`
     background-color: #ececec;
     border-radius: 2px;
   }
-
-`
+`;
 
 export const CloseButton = styled.button`
   width: 20px;
   height: 20px;
   background-color: rgb(225 74 74);
-  color: white;
+  color: #ffffff;
   font-size: 10px;
   font-weight: bold;
   border-radius: 100%;
-`
+`;
 
 export const ModalWrapper = styled.div`
   position: fixed;
@@ -57,7 +56,6 @@ export const ModalHeader = styled.div`
   justify-content: space-between;
 `;
 
-
 export const ModalContent = styled.div`
   padding-inline: 20px;
   padding-top: 10px;
@@ -67,17 +65,17 @@ export const ModalContent = styled.div`
   width: 100%;
   height: 90%;
   background-color: rgb(239, 243, 246);
-  box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.32);
+  box-shadow: -2px 10px 19px 0px rgba(0, 0, 0, 0.32);
 `;
 
 export const ModalTitle = styled.h2`
   color: ${titleColor};
   font-size: 12px;
-`
+`;
 
 export const EditorContainer = styled.div`
   color: black;
-  background-color: white;
+  background-color: #ffffff;
   border-radius: 15px;
   border: ${border};
 
@@ -88,13 +86,14 @@ export const EditorContainer = styled.div`
 
   & .ql-container.ql-snow {
     border: none;
+    color: #000000 !important;
   }
 
   & .ql-editor {
     height: 545px;
+    color: #000000 !important;
   }
-  
-`
+`;
 
 export const EditorHeader = styled.header`
   display: flex;
@@ -106,10 +105,12 @@ export const EditorHeader = styled.header`
   border-radius: 15px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-`
+`;
 
-export const EditorHeaderButton = styled.button<ThemedStyledProps<EditorHeaderButtonProps, any>>`
-  background-color: white;
+export const EditorHeaderButton = styled.button<
+  ThemedStyledProps<EditorHeaderButtonProps, any>
+>`
+  background-color: #ffffff;
   border-radius: 100%;
   border: ${border};
   padding: 5px;
@@ -118,10 +119,10 @@ export const EditorHeaderButton = styled.button<ThemedStyledProps<EditorHeaderBu
   user-select: none;
 
   &::before {
-    content: "${props => props.tooltip}";
+    content: "${(props) => props.tooltip}";
     white-space: nowrap;
     position: absolute;
-    background: white;
+    background: #ffffff;
     padding: 5px;
     border-radius: 3px;
     bottom: 130%;
@@ -137,7 +138,7 @@ export const EditorHeaderButton = styled.button<ThemedStyledProps<EditorHeaderBu
     height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-bottom: 10px solid white;
+    border-bottom: 10px solid #ffffff;
     transform: rotate(180deg);
     display: none;
   }
@@ -145,16 +146,15 @@ export const EditorHeaderButton = styled.button<ThemedStyledProps<EditorHeaderBu
   &:hover::before {
     display: inline-block;
   }
-  
-  &:hover::after  {
+
+  &:hover::after {
     display: inline-block;
   }
 
   &:active::before {
-    content: "${props => props.tooltipOnClick}"
+    content: "${(props) => props.tooltipOnClick}";
   }
-
-`
+`;
 
 export const PopupTitle = styled.p`
   font-size: 14px;
@@ -163,10 +163,10 @@ export const PopupTitle = styled.p`
   text-align: center;
   display: block;
   font-weight: 500;
-  color: #E8F4FA;
+  color: #e8f4fa;
   padding-top: 8px;
   padding-bottom: 18px;
-`
+`;
 
 export const PopupContainer = styled.div`
   display: flex;
@@ -191,10 +191,9 @@ export const PopupContainer = styled.div`
   }
 
   & > button:hover {
-    background-color: transparent !important; 
+    background-color: transparent !important;
   }
-
-`
+`;
 
 export const PopupFooter = styled.p`
   font-size: 11px;
@@ -203,7 +202,7 @@ export const PopupFooter = styled.p`
   margin-top: 20px;
   margin-bottom: 8px;
   font-family: Roboto, sans-serif;
-`
+`;
 
 export const ContextMenuContainer = styled.div`
   display: flex;
@@ -217,7 +216,7 @@ export const ContextMenuContainer = styled.div`
   top: 150%;
   right: -100%;
   padding-block: 10px;
-  box-shadow: -2px 10px 19px 0px rgba(0,0,0,0.32);
+  box-shadow: -2px 10px 19px 0px rgba(0, 0, 0, 0.32);
 
   &::before {
     content: "";
@@ -227,7 +226,6 @@ export const ContextMenuContainer = styled.div`
     height: 0;
     border-left: 12px solid transparent;
     border-right: 12px solid transparent;
-    border-bottom: 10px solid white;
+    border-bottom: 10px solid #ffffff;
   }
-
 `;

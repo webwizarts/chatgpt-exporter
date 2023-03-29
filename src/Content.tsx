@@ -7,12 +7,14 @@ import {
   ANSWER_CONTAINER,
   BUTTON_CONTAINER,
   CONTENT_CONTAINER,
-  DOWNLOAD_SVG,
   MAIN_CONTAINER,
   MODAL_CONTAINER,
   MENU_CONTAINER,
   CHAT_CONTAINER,
 } from "./utils/constants";
+
+import downloadImage from "./icons/download.png";
+import { downloadPDF, findNearestElementById } from "./utils/helpers";
 
 const addModalContainer = () => {
   const modalRoot = document.getElementById(MODAL_CONTAINER);
@@ -31,7 +33,12 @@ const handleExportClick = (event: MouseEvent) => {
     ?.closest(ANSWER_CONTAINER)
     ?.querySelector(CONTENT_CONTAINER);
 
+  // const contentContainerElement = content?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement;
   const modalContainer = document.getElementById(MODAL_CONTAINER);
+
+  // Ignore this element on pdf download
+  modalContainer?.setAttribute("data-html2canvas-ignore", "true");
+
   if (content && modalContainer) {
     const root = ReactDOMClient.createRoot(modalContainer);
     root.render(
@@ -45,25 +52,28 @@ const handleExportContextMenuClick = (event: MouseEvent) => {
   const target = event?.target as HTMLElement;
 
   // Need to add some kind of recursion here, this is ugly af
-  const menuContainer = target.parentElement?.parentElement?.querySelector(
-    `#${MENU_CONTAINER}` ??
-      target.parentElement?.querySelector(`#${MENU_CONTAINER}`) ??
-      target.parentElement?.parentElement?.parentElement?.querySelector(
-        `#${MENU_CONTAINER}`
-      )
-  );
+  const menuContainer = findNearestElementById(target, MENU_CONTAINER);
+
+  // Ignore this element on pdf download
+  menuContainer?.setAttribute("data-html2canvas-ignore", "true");
 
   const content = target
     ?.closest(ANSWER_CONTAINER)
     ?.querySelector(CONTENT_CONTAINER);
 
-  console.log("menuContainer", target, menuContainer);
+  // console.log("menuContainer", target, menuContainer);
+
+  // Answer group container
+  const contentElement =
+    content?.parentElement?.parentElement?.parentElement?.parentElement
+      ?.parentElement;
 
   if (content && menuContainer) {
     const root = ReactDOMClient.createRoot(menuContainer);
     root.render(
       <ContextMenu
         content={content.outerHTML}
+        element={contentElement}
         closeModal={() => root.unmount()}
       />
     );
@@ -78,9 +88,13 @@ const loadModal = (answer: Element) => {
     !button_container.querySelector('button[data-export="true"]') &&
     !button_container.querySelector(`#${MENU_CONTAINER}`)
   ) {
+    const imageElement = document.createElement("img");
+    imageElement.src = downloadImage;
+    imageElement.style.width = "20px";
+
     const exportButton = document.createElement("button");
-    exportButton.innerHTML = DOWNLOAD_SVG;
     exportButton.dataset.export = "true";
+    exportButton.appendChild(imageElement);
 
     button_container.appendChild(exportButton);
 
@@ -132,6 +146,12 @@ const ping = () => {
         setTimeout(ping, 1000);
       } else {
         sendResponse({ content: chatNode?.innerHTML });
+      }
+    } else if (request.message === "download_full_page") {
+      if (chrome.runtime.lastError) {
+        setTimeout(ping, 1000);
+      } else {
+        downloadPDF(document.querySelector("main"));
       }
     }
   });
