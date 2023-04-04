@@ -1,8 +1,6 @@
-chat-gpt-export
-===============
+<img src="https://user-images.githubusercontent.com/84965867/229865932-b4bcb73b-7f72-4671-8b16-d80cf6ef087c.png" width="150"/>
 
-(Still in Development, features work, but they are ugly)
-
+# ChatGPT Exporter
 This is a Chrome extension that allows you to export chat content in various formats such as PDF, Markdown, RTF, and plain text. The project is built using React, TypeScript, and styled-components, and leverages webpack for bundling.
 
 Features
