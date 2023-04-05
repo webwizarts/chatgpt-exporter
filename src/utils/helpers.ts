@@ -48,6 +48,7 @@ export const downloadMD = (content: string) => {
   const turndownService = new TurndownService();
   const markdown = turndownService.turndown(content);
   generateDownload(`${name}.md`, markdown, "text/markdown");
+  window.close()
 };
 
 export const downloadRTF = (content: string) => {
@@ -61,6 +62,7 @@ export const downloadTXT = (content: string) => {
   const name = filename();
   const text = htmlToText(content, { wordwrap: 130 });
   generateDownload(`${name}.txt`, text, "text/plain");
+  window.close()
 };
 
 export const isValidUrl = (url: string) => {
@@ -74,6 +76,8 @@ export const copyToClipboard = async (content: string) => {
     const text = htmlToText(content, { wordwrap: 130 });
     await navigator.clipboard.writeText(text);
     console.log("Text copied to clipboard");
+    // close popup after copying
+    window.close()
   } catch (err) {
     console.error("Failed to copy text: ", err);
   }

@@ -1,5 +1,7 @@
-import React, { useCallback } from "react";
 import ReactDOM from "react-dom";
+import React, { useCallback } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   MenuButton,
   PopupContainer,
@@ -22,6 +24,15 @@ import rtfImg from "./icons/rtf-white.png";
 import copyImg from "./icons/copy-white.png";
 
 const Popout = () => {
+  const notify = () => {
+    toast("Copied", {
+      className:"custom_style",
+      position:"top-center",
+      theme:"colored",
+      autoClose:2000
+    })
+  };
+
   const downloadPageContent = useCallback(
     (type: "COPY" | "PDF" | "MD" | "TXT" | "RTF") => {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -65,6 +76,7 @@ const Popout = () => {
 
   const handleDownloadPDF = useCallback(() => {
     downloadPageContent("PDF");
+    window.close()
   }, []);
 
   const handleDownloadMD = useCallback(() => {
@@ -73,6 +85,7 @@ const Popout = () => {
 
   const handleDownloadRTF = useCallback(() => {
     downloadPageContent("RTF");
+    window.close()
   }, []);
 
   const handleDownloadTXT = useCallback(() => {
@@ -90,6 +103,7 @@ const Popout = () => {
         <MenuButton onClick={handleCopy}>
           <img src={copyImg} width={20} alt="copy" />
           Copy To Clipboard
+          <ToastContainer style={{width: "100%"}} />
         </MenuButton>
         <MenuButton onClick={handleDownloadTXT}>
           <img src={txtImg} alt="txt" width={20} />
